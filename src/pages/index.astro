@@ -5,18 +5,16 @@ import EmailLink from '../components/EmailLink.astro';
 import { getCollection } from 'astro:content';
 import portrait from '../images/photo.jpg';
 
-const pubs = (await getCollection('publications')).sort((a, b) => b.data.year - a.data.year);
+const pubs = await getCollection('publications');
 const pubGroups = [
   { type: 'journal', label: 'Journal articles' },
   { type: 'conference', label: 'Conference papers' },
   { type: 'unpublished', label: 'Unpublished' },
 ] as const;
 
-const talks = (await getCollection('talks')).sort((a, b) =>
-  a.data.date.localeCompare(b.data.date)
-);
+const talks = await getCollection('talks');
 
-const awards = (await getCollection('awards')).sort((a, b) => b.data.year - a.data.year);
+const awards = await getCollection('awards');
 ---
 
 <BaseLayout

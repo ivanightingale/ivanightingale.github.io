@@ -1,0 +1,25 @@
+[
+  {
+    "id": "2502.06978",
+    "title": "Dual conic proxy for semidefinite relaxation of AC optimal power flow",
+    "authors": ["Guancheng Qiu", "Mathieu Tanneau", "Pascal Van Hentenryck"],
+    "venue": "Proc. IISE Annu. Conf. Expo",
+    "year": 2025,
+    "type": "conference",
+    "links": [
+      { "label": "arXiv", "url": "https://arxiv.org/abs/2502.06978" }
+    ]
+  },
+  {
+    "id": "2310.02969",
+    "title": "Dual conic proxies for AC optimal power flow",
+    "authors": ["Guancheng Qiu", "Mathieu Tanneau", "Pascal Van Hentenryck"],
+    "venue": "Electr. Power Syst. Res., vol. 236, 110661",
+    "year": 2024,
+    "type": "conference",
+    "links": [
+      { "label": "arXiv", "url": "https://arxiv.org/abs/2310.02969" },
+      { "label": "ScienceDirect", "url": "https://www.sciencedirect.com/science/article/abs/pii/S0378779624005479" }
+    ]
+  }
+]
