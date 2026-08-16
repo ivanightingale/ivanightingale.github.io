@@ -1,0 +1,32 @@
+---
+interface Props {
+  user: string;
+  domain: string;
+}
+
+const { user, domain } = Astro.props;
+const email = `${user}@${domain}`;
+const at = email.indexOf('@');
+const toHex = (s: string) =>
+  [...s].map((c) => c.charCodeAt(0).toString(16).padStart(2, '0')).join('');
+const head = toHex(email.slice(0, at + 1));
+const tail = toHex(email.slice(at + 1));
+---
+
+<a class="home__email" href="#" data-hex={head} data-hex2={tail}>Email</a>
+<script is:inline>
+  (function () {
+    const a = document.currentScript.previousElementSibling;
+    if (!a || !a.dataset || !a.dataset.hex) return;
+    const hex = a.dataset.hex + (a.dataset.hex2 || '');
+    let addr = '';
+    for (let i = 0; i < hex.length; i += 2) {
+      addr += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+    }
+    a.href = 'mailto:' + addr;
+    a.textContent = addr;
+  })();
+</script>
+<noscript>
+  <span>Email available with JavaScript enabled.</span>
+</noscript>

@@ -1,0 +1,48 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TagPill from '../../components/TagPill.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const formattedDate = new Intl.DateTimeFormat('en', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+}).format(post.data.date);
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <article class="post">
+    {post.data.cover && (
+      <Image
+        class="post__cover"
+        src={post.data.cover.src}
+        alt={post.data.cover.alt}
+        widths={[720, 1440]}
+        sizes="720px"
+      />
+    )}
+    <header class="post__header">
+      <time datetime={post.data.date.toISOString()}>{formattedDate}</time>
+      <h1>{post.data.title}</h1>
+      {post.data.tags.length > 0 && (
+        <div class="post__tags">
+          {post.data.tags.map((tag) => (
+            <TagPill tag={tag} />
+          ))}
+        </div>
+      )}
+    </header>
+    <div class="post__body">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

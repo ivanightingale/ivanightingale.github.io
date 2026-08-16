@@ -1,0 +1,33 @@
+# build output
+dist/
+
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+.bun/
+
+# TypeScript
+*.tsbuildinfo
+
+# logs
+npm-debug.log*
+*.log
+
+# environment
+.env*
+.env.*.local
+
+# editors
+.idea/
+.vscode/*
+!.vscode/extensions.json
+.history/
+
+# macOS
+.DS_Store
+
+# editor swap files
+*.swp
+*.swo

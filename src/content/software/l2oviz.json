@@ -1,0 +1,7 @@
+{
+  "name": "L2OViz.jl",
+  "description": "Tool for visualizing the solutions to multiple instances of an optimization problem.",
+  "image": "../../images/software/l2oviz.png",
+  "github": "https://github.com/LearningToOptimize/L2OViz.jl",
+  "tags": ["Optimization", "Data analysis", "Julia"]
+}

@@ -1,0 +1,21 @@
+---
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/software', label: 'Software' },
+  { href: '/blog', label: 'Blog' },
+];
+
+const { pathname } = Astro.url;
+const isActive = (href: string) =>
+  href === '/' ? pathname === '/' : pathname.startsWith(href);
+---
+
+<header class="site-header">
+  <nav class="nav" aria-label="Site">
+    {links.map((link) => (
+      <a href={link.href} class:list={{ active: isActive(link.href) }}>
+        {link.label}
+      </a>
+    ))}
+  </nav>
+</header>

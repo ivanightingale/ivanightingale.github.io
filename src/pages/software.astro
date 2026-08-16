@@ -1,0 +1,38 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('software');
+---
+
+<BaseLayout title="Software" description="Software projects by Guancheng Qiu.">
+  <h1>Software</h1>
+  <ul class="software">
+    {projects.map((project) => (
+      <li class="software__item">
+        {project.data.image && (
+          <Image
+            class="software__image"
+            src={project.data.image}
+            alt={`${project.data.name} screenshot`}
+            widths={[400, 800]}
+            sizes="260px"
+          />
+        )}
+        <div class="software__body">
+          <h2 class="software__name">{project.data.name}</h2>
+          <p class="software__desc">{project.data.description}</p>
+          {project.data.tags.length > 0 && (
+            <div class="software__tags">
+              {project.data.tags.map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          )}
+          {project.data.github && <a class="software__github" href={project.data.github}>GitHub</a>}
+        </div>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>

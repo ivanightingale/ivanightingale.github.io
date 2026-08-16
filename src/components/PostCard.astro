@@ -1,0 +1,42 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import TagPill from './TagPill.astro';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { data } = post;
+const formattedDate = new Intl.DateTimeFormat('en', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+  timeZone: 'UTC',
+}).format(data.date);
+---
+
+<article class="post-card">
+  {data.cover && (
+    <a class="post-card__cover" href={`/blog/${post.id}/`}>
+      <Image src={data.cover.src} alt={data.cover.alt} width={640} loading="lazy" />
+    </a>
+  )}
+  <div class="post-card__body">
+    <time class="post-card__date" datetime={data.date.toISOString()}>
+      {formattedDate}
+    </time>
+    <h2 class="post-card__title">
+      <a href={`/blog/${post.id}/`}>{data.title}</a>
+    </h2>
+    <p class="post-card__excerpt">{data.description}</p>
+    {data.tags.length > 0 && (
+      <div class="post-card__tags">
+        {data.tags.map((tag) => (
+          <TagPill tag={tag} />
+        ))}
+      </div>
+    )}
+  </div>
+</article>
