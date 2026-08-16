@@ -7,32 +7,42 @@ const projects = await getCollection('software');
 ---
 
 <BaseLayout title="Software" description="Software projects by Guancheng Qiu.">
-  <h1>Software</h1>
-  <ul class="software">
-    {projects.map((project) => (
-      <li class="software__item">
-        {project.data.image && (
-          <Image
-            class="software__image"
-            src={project.data.image}
-            alt={`${project.data.name} screenshot`}
-            widths={[400, 800]}
-            sizes="260px"
-          />
-        )}
-        <div class="software__body">
-          <h2 class="software__name">{project.data.name}</h2>
-          <p class="software__desc">{project.data.description}</p>
-          {project.data.tags.length > 0 && (
-            <div class="software__tags">
-              {project.data.tags.map((tag) => (
-                <span class="tag">{tag}</span>
-              ))}
-            </div>
-          )}
-          {project.data.github && <a class="software__github" href={project.data.github}>GitHub</a>}
-        </div>
-      </li>
-    ))}
-  </ul>
+  <div class="spread">
+    <div class="spread__rail">
+      <h1 class="spread__title">Software</h1>
+    </div>
+    <div class="spread__body">
+      {projects.length === 0 ? (
+        <p class="empty">No projects listed yet.</p>
+      ) : (
+        <ul class="projects">
+          {projects.map((project) => (
+            <li class="project">
+              <h2 class="project__name">{project.data.name}</h2>
+              <p class="project__desc">{project.data.description}</p>
+              {project.data.tags.length > 0 && (
+                <div class="project__tags">
+                  {project.data.tags.map((tag) => (
+                    <span class="tag">{tag}</span>
+                  ))}
+                </div>
+              )}
+              {project.data.github && (
+                <a class="project__link" href={project.data.github}>GitHub</a>
+              )}
+              {project.data.image && (
+                <Image
+                  class="project__shot"
+                  src={project.data.image}
+                  alt={`${project.data.name} screenshot`}
+                  widths={[440, 880]}
+                  sizes="800px"
+                />
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </div>
 </BaseLayout>

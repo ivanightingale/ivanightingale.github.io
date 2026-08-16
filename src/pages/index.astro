@@ -17,24 +17,24 @@ const talks = await getCollection('talks');
 const awards = await getCollection('awards');
 ---
 
-<BaseLayout
-  title="Guancheng Qiu — academic homepage"
-  description="Guancheng Qiu's academic homepage: research and blog."
->
-  <section class="home">
-    <div class="home__side">
+<BaseLayout description="Guancheng Qiu's academic homepage: research and blog.">
+  <header class="masthead">
+    <h1 class="masthead__name">Guancheng "Ivan" Qiu</h1>
+    <p class="masthead__role">Ph.D. Candidate in Operations Research</p>
+  </header>
+
+  <div class="intro">
+    <div class="intro__aside">
       <Image
-        class="home__portrait"
+        class="intro__portrait"
         src={portrait}
         alt="Portrait of Guancheng Qiu"
-        widths={[300, 600, 900]}
-        sizes="300px"
+        widths={[280, 560, 840]}
+        sizes="280px"
       />
-      <h1 class="home__name">Guancheng "Ivan" Qiu</h1>
-      <p class="home__role">Ph.D. Candidate in Operations Research</p>
-      <div class="home__contact">
+      <div class="intro__contact">
         <EmailLink user="qgc" domain="gatech.edu" />
-        <nav class="home__links" aria-label="Links">
+        <nav class="intro__links" aria-label="Profiles">
           <a href="https://github.com/ivanightingale" aria-label="GitHub">
             <svg class="icon" viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true">
               <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
@@ -48,87 +48,99 @@ const awards = await getCollection('awards');
         </nav>
       </div>
     </div>
-    <div class="home__bio">
+    <div class="intro__lead">
       <p>
         I am a fifth-year Ph.D. student in Operations Research at Georgia Institute of Technology, and the <a href="https://www.ai4opt.org">NSF AI Institute for Advances in Optimization (AI4OPT)</a>, advised by Prof. <a href="https://www.isye.gatech.edu/users/pascal-van-hentenryck">Pascal Van Hentenryck</a>.
         My research focuses on applying machine learning to solve optimization problems, the verification of such machine learning models, and their applications in energy systems.
         Previously, I received my B.S. in Computer Science and B.S. in Applied and Computational Mathematics from the University of Southern California in 2020.
       </p>
     </div>
-  </section>
+  </div>
 
-  <nav class="jump-nav" aria-label="Jump to section">
+  <nav class="page-index" aria-label="Sections on this page">
     <a href="#publications">Publications</a>
     <a href="#talks">Talks</a>
     <a href="#awards">Awards</a>
   </nav>
 
-  <section id="publications" class="section">
-    <h2 class="section-title">Publications</h2>
-    {pubGroups.map((group) => {
-      const items = pubs.filter((p) => p.data.type === group.type);
-      if (items.length === 0) return null;
-      return (
-        <>
-          <h3 class="pub-group">{group.label}</h3>
-          <ol class="pubs">
-            {items.map((pub) => (
-              <li class="pub">
-                <p class="pub__title">{pub.data.title}</p>
-                <p class="pub__authors">{pub.data.authors.join(', ')}</p>
-                <p class="pub__venue">
-                  <em>{pub.data.venue}</em>, {pub.data.year}
-                </p>
-                {pub.data.note && <p class="pub__note">{pub.data.note}</p>}
-                {pub.data.links.length > 0 && (
-                  <p class="pub__links">
-                    {pub.data.links.map((link) => (
-                      <a href={link.url}>{link.label}</a>
-                    ))}
+  <section id="publications" class="spread">
+    <div class="spread__rail">
+      <h2 class="spread__title">Publications</h2>
+    </div>
+    <div class="spread__body">
+      {pubGroups.map((group) => {
+        const items = pubs.filter((p) => p.data.type === group.type);
+        if (items.length === 0) return null;
+        return (
+          <>
+            <h3 class="pub-group">{group.label}</h3>
+            <ol class="pubs">
+              {items.map((pub) => (
+                <li class="pub">
+                  <p class="pub__title">{pub.data.title}</p>
+                  <p class="pub__authors">{pub.data.authors.join(', ')}</p>
+                  <p class="pub__venue">
+                    <em>{pub.data.venue}</em>, {pub.data.year}
                   </p>
-                )}
-              </li>
-            ))}
-          </ol>
-        </>
-      );
-    })}
-  </section>
-
-  <section id="talks" class="section">
-    <h2 class="section-title">Talks</h2>
-    <ul class="talks">
-      {talks.map((talk) => (
-        <li class="talk">
-          <p class="talk__title">{talk.data.title}</p>
-          <p class="talk__meta">
-            {talk.data.event}
-            {talk.data.location && `, ${talk.data.location}`} — {talk.data.date}
-          </p>
-          {talk.data.links.length > 0 && (
-            <p class="talk__links">
-              {talk.data.links.map((link) => (
-                <a href={link.url}>{link.label}</a>
+                  {pub.data.note && <p class="pub__note">{pub.data.note}</p>}
+                  {pub.data.links.length > 0 && (
+                    <p class="pub__links">
+                      {pub.data.links.map((link) => (
+                        <a href={link.url}>{link.label}</a>
+                      ))}
+                    </p>
+                  )}
+                </li>
               ))}
-            </p>
-          )}
-        </li>
-      ))}
-    </ul>
+            </ol>
+          </>
+        );
+      })}
+    </div>
   </section>
 
-  <section id="awards" class="section">
-    <h2 class="section-title">Awards</h2>
-    <ul class="awards">
-      {awards.map((award) => (
-        <li class="award">
-          <p class="award__title">{award.data.title}</p>
-          <p class="award__meta">
-            {award.data.org}, {award.data.year}
-            {award.data.note && ` — ${award.data.note}`}
-          </p>
-        </li>
-      ))}
-    </ul>
+  <section id="talks" class="spread">
+    <div class="spread__rail">
+      <h2 class="spread__title">Talks</h2>
+    </div>
+    <div class="spread__body">
+      <ul class="talks">
+        {talks.map((talk) => (
+          <li class="talk">
+            <p class="talk__date">{talk.data.date}</p>
+            <div>
+              <p class="talk__title">{talk.data.title}</p>
+              <p class="talk__meta">
+                {talk.data.location ? `${talk.data.event}, ${talk.data.location}` : talk.data.event}
+              </p>
+              {talk.data.links.length > 0 && (
+                <p class="talk__links">
+                  {talk.data.links.map((link) => (
+                    <a href={link.url}>{link.label}</a>
+                  ))}
+                </p>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section id="awards" class="spread">
+    <div class="spread__rail">
+      <h2 class="spread__title">Awards</h2>
+    </div>
+    <div class="spread__body">
+      <ul class="awards">
+        {awards.map((award) => (
+          <li class="award">
+            <p class="award__title">{award.data.title}</p>
+            <p class="award__meta">{award.data.org}, {award.data.year}</p>
+            {award.data.note && <p class="award__note">{award.data.note}</p>}
+          </li>
+        ))}
+      </ul>
+    </div>
   </section>
 </BaseLayout>

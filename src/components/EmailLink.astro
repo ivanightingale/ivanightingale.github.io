@@ -13,7 +13,7 @@ const head = toHex(email.slice(0, at + 1));
 const tail = toHex(email.slice(at + 1));
 ---
 
-<a class="home__email" href="#" data-hex={head} data-hex2={tail}>Email</a>
+<a class="intro__email" href="#" data-hex={head} data-hex2={tail}>Email</a>
 <script is:inline>
   (function () {
     const a = document.currentScript.previousElementSibling;
