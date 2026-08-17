@@ -305,6 +305,7 @@ section[id] {
 }
 
 .intro__email {
+  align-self: flex-start;
   color: var(--text-soft);
   text-decoration: none;
   word-break: break-word;
