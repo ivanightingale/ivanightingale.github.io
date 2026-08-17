@@ -10,7 +10,7 @@
    ========================================================================== */
 
 :root {
-  --bg: #ffffff;
+  --bg: #fdf8f0;
   --sunk: #f6f3ef;
   --text: #1e1b17;
   --text-soft: #4f4a43;
@@ -344,7 +344,7 @@ section[id] {
 
 /* Opening paragraph, set a step larger than body text. */
 .intro__lead {
-  max-width: var(--measure);
+  max-width: 46rem;
   font-size: 19px;
   line-height: 1.65;
 }
@@ -905,6 +905,38 @@ a.tag:hover {
 }
 
 /* ==========================================================================
+   Closing horizon
+
+   A single landscape at the foot of the home page. It runs full-bleed so the
+   coastline has no cut side edges, and its own transparent background lets it
+   sit directly on white with no frame or box anywhere.
+   ========================================================================== */
+
+/* Rendered into the layout's page-foot slot, so it is a direct child of body
+   rather than of the centered container. That makes it full-bleed by simply
+   stretching, with no 100vw and so no scrollbar-width overflow.
+
+   Natural aspect ratio, full strength, no color/opacity treatment. The empty
+   sky above the clouds is pre-cropped out of the source asset (not masked
+   here), so the image sits close under the page content instead of floating
+   in open space; no extra top margin is added. */
+.closing-horizon {
+  margin-block: 0;
+}
+
+.closing-horizon img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Seats the band directly on the footer rule, so the road's lower edge lands on
+   a real boundary instead of being cut off in open space. */
+.closing-horizon + .site-footer {
+  margin-top: 0;
+}
+
+/* ==========================================================================
    Empty state
    ========================================================================== */
 
@@ -926,27 +958,9 @@ a.tag:hover {
 }
 
 .site-footer .container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 24px;
-  justify-content: space-between;
   font-family: var(--sans);
   font-size: 13px;
   color: var(--muted);
-}
-
-.site-footer a {
-  color: var(--muted);
-  text-decoration: none;
-}
-
-.site-footer a:hover {
-  color: var(--accent);
-}
-
-.site-footer__links {
-  display: flex;
-  gap: 20px;
 }
 
 /* ==========================================================================
@@ -987,6 +1001,10 @@ a.tag:hover {
     grid-template-columns: minmax(0, 1fr);
   }
 
+  .masthead {
+    margin-bottom: 32px;
+  }
+
   .spread__rail {
     position: static;
     margin-bottom: 24px;
@@ -997,16 +1015,12 @@ a.tag:hover {
     padding-top: 32px;
   }
 
-  .masthead {
-    margin-bottom: 32px;
-  }
-
   .intro {
     row-gap: 28px;
   }
 
   .intro__portrait {
-    max-width: 220px;
+    max-width: 190px;
   }
 
   .intro__lead {
@@ -1016,6 +1030,10 @@ a.tag:hover {
   .page-index {
     gap: 20px;
     margin-top: 40px;
+  }
+
+  .closing-horizon {
+    margin-block: 0;
   }
 
   .talk {

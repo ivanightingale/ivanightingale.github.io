@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import EmailLink from '../components/EmailLink.astro';
 import { getCollection } from 'astro:content';
 import portrait from '../images/photo.jpg';
+import closingHorizon from '../images/home/closing-horizon.png';
 
 const pubs = await getCollection('publications');
 const pubGroups = [
@@ -143,4 +144,18 @@ const awards = await getCollection('awards');
       </ul>
     </div>
   </section>
+
+  {/* Closes the page rather than competing with it: the record ends, the coast
+      opens out. Cropped to the clouds (empty sky above them trimmed) so the
+      image sits close under Awards instead of floating in open space.
+      Decorative, so it is hidden from assistive tech. */}
+  <div class="closing-horizon" slot="page-foot" aria-hidden="true">
+    <Image
+      src={closingHorizon}
+      alt=""
+      widths={[960, 1440, 1618]}
+      sizes="100vw"
+      loading="lazy"
+    />
+  </div>
 </BaseLayout>

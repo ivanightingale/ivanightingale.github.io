@@ -45,6 +45,8 @@ const documentTitle = title
     <main id="content" class="container">
       <slot />
     </main>
+    {/* Full-bleed page-closing content, outside the centered container. */}
+    <slot name="page-foot" />
     <Footer />
   </body>
 </html>
