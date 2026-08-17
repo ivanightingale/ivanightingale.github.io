@@ -9,7 +9,7 @@ export default defineConfig({
     remarkPlugins: [remarkMath],
     rehypePlugins: [[rehypeMathjax, { output: 'svg' }]],
     shikiConfig: {
-      theme: 'nord',
+      theme: 'everforest-light',
     },
   },
 });
