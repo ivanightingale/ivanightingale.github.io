@@ -19,13 +19,26 @@ const posts = (await getCollection('blog'))
   .sort((a, b) => b.data.date - a.data.date);
 ---
 
-<BaseLayout title={`Posts tagged "${tag}"`}>
-  <h1>
-    Posts tagged <span class="muted">{tag}</span>
-  </h1>
-  <div class="post-grid">
-    {posts.map((post) => (
-      <PostCard post={post} />
-    ))}
+<BaseLayout title={`Posts tagged "${tag}"`} description={`Blog posts tagged ${tag}.`}>
+  <div class="spread">
+    <div class="spread__rail">
+      <h1 class="spread__title">{tag}</h1>
+      <p class="spread__meta">
+        {posts.length} {posts.length === 1 ? 'post' : 'posts'}
+        <br />
+        <a href="/blog/tags/">All tags</a>
+      </p>
+    </div>
+    <div class="spread__body">
+      {posts.length === 0 ? (
+        <p class="empty">No posts with this tag.</p>
+      ) : (
+        <ul class="posts">
+          {posts.map((post) => (
+            <li><PostCard post={post} /></li>
+          ))}
+        </ul>
+      )}
+    </div>
   </div>
 </BaseLayout>

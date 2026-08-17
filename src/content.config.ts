@@ -1,5 +1,5 @@
 import { defineCollection } from 'astro:content';
-import { glob } from 'astro/loaders';
+import { file, glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
 const blog = defineCollection({
@@ -20,8 +20,9 @@ const blog = defineCollection({
 });
 
 const publications = defineCollection({
-  loader: glob({ pattern: '*.json', base: './src/content/publications' }),
+  loader: file('./src/content/publications.json'),
   schema: z.object({
+    id: z.string(),
     title: z.string(),
     authors: z.array(z.string()),
     venue: z.string(),
@@ -40,8 +41,9 @@ const publications = defineCollection({
 });
 
 const talks = defineCollection({
-  loader: glob({ pattern: '*.json', base: './src/content/talks' }),
+  loader: file('./src/content/talks.json'),
   schema: z.object({
+    id: z.string(),
     title: z.string(),
     event: z.string(),
     location: z.string().optional(),
@@ -58,8 +60,9 @@ const talks = defineCollection({
 });
 
 const awards = defineCollection({
-  loader: glob({ pattern: '*.json', base: './src/content/awards' }),
+  loader: file('./src/content/awards.json'),
   schema: z.object({
+    id: z.string(),
     title: z.string(),
     org: z.string(),
     year: z.number(),
@@ -68,9 +71,10 @@ const awards = defineCollection({
 });
 
 const software = defineCollection({
-  loader: glob({ pattern: '*.json', base: './src/content/software' }),
+  loader: file('./src/content/software.json'),
   schema: ({ image }) =>
     z.object({
+      id: z.string(),
       name: z.string(),
       description: z.string(),
       image: image().optional(),

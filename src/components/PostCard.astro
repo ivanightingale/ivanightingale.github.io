@@ -5,34 +5,43 @@ import TagPill from './TagPill.astro';
 
 interface Props {
   post: CollectionEntry<'blog'>;
+  /** The newest post leads the list with a full-width cover. */
+  lead?: boolean;
 }
 
-const { post } = Astro.props;
+const { post, lead = false } = Astro.props;
 const { data } = post;
+const href = `/blog/${post.id}/`;
 const formattedDate = new Intl.DateTimeFormat('en', {
   year: 'numeric',
   month: 'short',
   day: 'numeric',
   timeZone: 'UTC',
 }).format(data.date);
+
+const block = lead ? 'post-lead' : 'post-item';
+// Without a cover there is nothing to fill the thumbnail column, so the row
+// collapses to a single column.
+const wrapperClass = !lead && !data.cover ? `${block} ${block}--textonly` : block;
+const coverWidths = lead ? [560, 1120] : [150, 300];
+const coverSizes = lead ? '800px' : '150px';
 ---
 
-<article class="post-card">
+<article class={wrapperClass}>
   {data.cover && (
-    <a class="post-card__cover" href={`/blog/${post.id}/`}>
-      <Image src={data.cover.src} alt={data.cover.alt} width={640} loading="lazy" />
+    /* Decorative in a list: the title link beneath already names the destination. */
+    <a class={`${block}__cover`} href={href} tabindex="-1" aria-hidden="true">
+      <Image src={data.cover.src} alt="" widths={coverWidths} sizes={coverSizes} />
     </a>
   )}
-  <div class="post-card__body">
-    <time class="post-card__date" datetime={data.date.toISOString()}>
-      {formattedDate}
-    </time>
-    <h2 class="post-card__title">
-      <a href={`/blog/${post.id}/`}>{data.title}</a>
+  <div>
+    <time class="post-date" datetime={data.date.toISOString()}>{formattedDate}</time>
+    <h2 class={`${block}__title`}>
+      <a href={href}>{data.title}</a>
     </h2>
-    <p class="post-card__excerpt">{data.description}</p>
+    <p class="post-excerpt">{data.description}</p>
     {data.tags.length > 0 && (
-      <div class="post-card__tags">
+      <div class="tag-row">
         {data.tags.map((tag) => (
           <TagPill tag={tag} />
         ))}

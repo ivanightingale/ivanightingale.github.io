@@ -1,0 +1,22 @@
+[
+  {
+    "id": "informs2025",
+    "title": "Dual Conic Proxy for Semidefinite Relaxation of AC Optimal Power Flow",
+    "event": "INFORMS 2025",
+    "location": "Atlanta, GA",
+    "date": "October 2025",
+    "links": [
+      { "label": "slides", "url": "/pdf/example-talk.pdf" }
+    ]
+  },
+  {
+    "id": "informs2024",
+    "title": "Dual Conic Proxies for AC Optimal Power Flow",
+    "event": "INFORMS 2024",
+    "location": "Seattle, WA",
+    "date": "October 2024",
+    "links": [
+      { "label": "slides", "url": "/pdf/example-talk.pdf" }
+    ]
+  }
+]

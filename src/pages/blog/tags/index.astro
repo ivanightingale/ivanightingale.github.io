@@ -14,14 +14,26 @@ const tags = [...counts.entries()].sort((a, b) => a[0].localeCompare(b[0]));
 ---
 
 <BaseLayout title="Blog tags" description="All blog post tags.">
-  <h1>Tags</h1>
-  <ul class="tag-index">
-    {tags.map(([tag, count]) => (
-      <li>
-        <a href={`/blog/tags/${slugify(tag)}/`}>
-          {tag} <span class="muted">{count}</span>
-        </a>
-      </li>
-    ))}
-  </ul>
+  <div class="spread">
+    <div class="spread__rail">
+      <h1 class="spread__title">Tags</h1>
+      <p class="spread__meta"><a href="/blog/">All posts</a></p>
+    </div>
+    <div class="spread__body">
+      {tags.length === 0 ? (
+        <p class="empty">No tags yet.</p>
+      ) : (
+        <ul class="tag-index">
+          {tags.map(([tag, count]) => (
+            <li>
+              <a href={`/blog/tags/${slugify(tag)}/`}>
+                <span>{tag}</span>
+                <span class="tag-index__count">{count}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </div>
 </BaseLayout>

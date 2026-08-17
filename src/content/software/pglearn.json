@@ -1,5 +1,0 @@
-{
-  "name": "PGLearn.jl",
-  "description": "Instance generator for optimal power flow (OPF) problems.",
-  "tags": ["Optimization", "Machine learning", "Power system", "Julia"]
-}

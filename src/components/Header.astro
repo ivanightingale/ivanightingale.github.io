@@ -1,21 +1,28 @@
 ---
 const links = [
-  { href: '/', label: 'Home' },
   { href: '/software', label: 'Software' },
   { href: '/blog', label: 'Blog' },
 ];
 
 const { pathname } = Astro.url;
-const isActive = (href: string) =>
-  href === '/' ? pathname === '/' : pathname.startsWith(href);
+const isActive = (href: string) => pathname.startsWith(href);
 ---
 
 <header class="site-header">
-  <nav class="nav" aria-label="Site">
-    {links.map((link) => (
-      <a href={link.href} class:list={{ active: isActive(link.href) }}>
-        {link.label}
-      </a>
-    ))}
+  <nav class="site-header__inner" aria-label="Site">
+    <a class="nav-link" href="/" aria-current={pathname === '/' ? 'page' : undefined}>
+      Home
+    </a>
+    <div class="nav">
+      {links.map((link) => (
+        <a
+          class="nav-link"
+          href={link.href}
+          aria-current={isActive(link.href) ? 'page' : undefined}
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
   </nav>
 </header>

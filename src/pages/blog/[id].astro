@@ -20,29 +20,31 @@ const formattedDate = new Intl.DateTimeFormat('en', {
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <article class="post">
-    {post.data.cover && (
-      <Image
-        class="post__cover"
-        src={post.data.cover.src}
-        alt={post.data.cover.alt}
-        widths={[720, 1440]}
-        sizes="720px"
-      />
-    )}
-    <header class="post__header">
-      <time datetime={post.data.date.toISOString()}>{formattedDate}</time>
-      <h1>{post.data.title}</h1>
+  <article class="spread">
+    <div class="spread__rail">
+      <time class="post-date" datetime={post.data.date.toISOString()}>{formattedDate}</time>
       {post.data.tags.length > 0 && (
-        <div class="post__tags">
-          {post.data.tags.map((tag) => (
-            <TagPill tag={tag} />
-          ))}
+        <div class="spread__meta">
+          <div class="tag-row">
+            {post.data.tags.map((tag) => <TagPill tag={tag} />)}
+          </div>
         </div>
       )}
-    </header>
-    <div class="post__body">
-      <Content />
+    </div>
+    <div class="spread__body">
+      <h1 class="article__title">{post.data.title}</h1>
+      {post.data.cover && (
+        <Image
+          class="article__cover"
+          src={post.data.cover.src}
+          alt={post.data.cover.alt}
+          widths={[440, 880]}
+          sizes="800px"
+        />
+      )}
+      <div class="article__body">
+        <Content />
+      </div>
     </div>
   </article>
 </BaseLayout>
