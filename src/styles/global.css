@@ -710,11 +710,6 @@ a.tag:hover {
   display: block;
   aspect-ratio: 2 / 1;
   object-fit: cover;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.post-lead__cover:hover img {
-  transform: scale(1.015);
 }
 
 .post-lead__title {
@@ -869,7 +864,7 @@ a.tag:hover {
   border-radius: var(--radius-sm);
 }
 
-/* Shiki code blocks (nord theme, colors are inline) */
+/* Shiki code blocks (everforest-light theme, colors are inline) */
 
 .astro-code {
   margin: 1.75em 0;
