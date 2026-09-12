@@ -78,7 +78,7 @@ const software = defineCollection({
       name: z.string(),
       description: z.string(),
       image: image().optional(),
-      github: z.string().url().optional(),
+      github: z.url().optional(),
       tags: z.array(z.string()).default([]),
     }),
 });
