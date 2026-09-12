@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TagPill from '../../components/TagPill.astro';
 import { getCollection, render } from 'astro:content';
-import { getGitDates } from '../../lib/git-dates';
+import { getPostDates, formatPostDate } from '../../lib/post-dates';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -12,32 +12,16 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
-
-const { created, updated } = await getGitDates(post.filePath);
-const createdDate = created ?? post.data.date;
-const updatedDate = updated ?? post.data.date;
-
-const formatter = new Intl.DateTimeFormat('en', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-  timeZone: 'UTC',
-});
-const formattedCreated = formatter.format(createdDate);
-const formattedUpdated = formatter.format(updatedDate);
-
-const dayKey = (d: Date) =>
-  `${d.getUTCFullYear()}-${d.getUTCMonth()}-${d.getUTCDate()}`;
-const showUpdated = dayKey(createdDate) !== dayKey(updatedDate);
+const { created, updated, showUpdated } = await getPostDates(post);
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
   <article class="spread">
     <div class="spread__rail">
-      <time class="post-date" datetime={createdDate.toISOString()}>{formattedCreated}</time>
+      <time class="post-date" datetime={created.toISOString()}>{formatPostDate(created)}</time>
       {showUpdated && (
-        <time class="post-date post-date--updated" datetime={updatedDate.toISOString()}>
-          Updated {formattedUpdated}
+        <time class="post-date post-date--updated" datetime={updated.toISOString()}>
+          Updated {formatPostDate(updated)}
         </time>
       )}
       {post.data.tags.length > 0 && (

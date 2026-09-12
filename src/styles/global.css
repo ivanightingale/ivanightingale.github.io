@@ -682,60 +682,39 @@ a.tag:hover {
 /* ==========================================================================
    Blog list
 
-   The newest post leads with a full-width cover; the rest are compact rows
-   with a thumbnail. No card borders, spacing does the grouping.
+   One post per row: text on the left, cover on the right. The cover keeps its
+   natural ratio and is boxed to the text's own height and a fixed width, so a
+   cover can never grow taller or wider than the words beside it.
    ========================================================================== */
 
 .posts {
+  --cover-max: 200px;
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.post-lead {
-  padding-bottom: 44px;
-  border-bottom: 1px solid var(--rule);
-}
-
-.post-lead__cover {
-  display: block;
-  margin-bottom: 22px;
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-
-.post-lead__cover img {
-  width: 100%;
-  height: auto;
-  display: block;
-  aspect-ratio: 2 / 1;
-  object-fit: cover;
-}
-
-.post-lead__title {
-  margin: 0 0 10px;
-  font-size: 1.75rem;
+/* Open spacing does the grouping; no rule under every row. */
+.posts > li + li {
+  margin-top: 40px;
 }
 
 .post-item {
-  display: grid;
-  grid-template-columns: 150px minmax(0, 1fr);
-  column-gap: 28px;
-  align-items: start;
-  padding: 32px 0;
-  border-bottom: 1px solid var(--rule);
+  position: relative;
+  padding-right: calc(var(--cover-max) + 28px);
 }
 
-/* Rows carrying no cover image collapse to a single column. */
+/* Without a cover there is nothing to reserve on the right. */
 .post-item--textonly {
-  grid-template-columns: minmax(0, 1fr);
-}
-
-.post-item:last-child {
-  border-bottom: 0;
+  padding-right: 0;
 }
 
 .post-item__cover {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--cover-max);
+  height: 100%;
   display: block;
   border-radius: var(--radius);
   overflow: hidden;
@@ -743,26 +722,28 @@ a.tag:hover {
 
 .post-item__cover img {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: top right;
 }
 
 .post-item__title {
   margin: 0 0 8px;
-  font-size: 1.1875rem;
+  font-size: clamp(1.5rem, 1.3rem + 0.7vw, 1.75rem);
 }
 
-.post-lead__title a,
 .post-item__title a {
   color: var(--text);
   text-decoration: none;
 }
 
-.post-lead__title a:hover,
 .post-item__title a:hover {
   color: var(--accent);
+}
+
+.post-meta {
+  margin-bottom: 10px;
 }
 
 .post-date {
@@ -784,11 +765,6 @@ a.tag:hover {
   margin: 0 0 12px;
   color: var(--text-soft);
   font-size: 15.5px;
-}
-
-.post-lead .post-date,
-.post-item .post-date {
-  margin-bottom: 8px;
 }
 
 /* ==========================================================================
@@ -996,8 +972,7 @@ a.tag:hover {
 
   .spread,
   .intro,
-  .talk,
-  .post-item {
+  .talk {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -1046,11 +1021,20 @@ a.tag:hover {
   }
 
   .post-item {
-    row-gap: 16px;
+    padding-right: 0;
   }
 
   .post-item__cover {
-    max-width: 260px;
+    position: static;
+    width: 100%;
+    height: auto;
+    margin-top: 18px;
+  }
+
+  .post-item__cover img {
+    width: 100%;
+    height: auto;
+    object-fit: initial;
   }
 
   .project {
@@ -1075,10 +1059,6 @@ a.tag:hover {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-  }
-
-  .post-lead__cover:hover img {
-    transform: none;
   }
 }
 

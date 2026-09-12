@@ -3,6 +3,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import PostCard from '../../../components/PostCard.astro';
 import { getCollection } from 'astro:content';
 import { slugify } from '../../../lib/slugify';
+import { getPostDates } from '../../../lib/post-dates';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -14,9 +15,16 @@ export async function getStaticPaths() {
 }
 
 const { tag } = Astro.props;
-const posts = (await getCollection('blog'))
-  .filter((post) => post.data.tags.some((t) => slugify(t) === tag))
-  .sort((a, b) => b.data.date - a.data.date);
+const matching = (await getCollection('blog')).filter((post) =>
+  post.data.tags.some((t) => slugify(t) === tag)
+);
+const posts = (
+  await Promise.all(
+    matching.map(async (post) => ({ post, created: (await getPostDates(post)).created }))
+  )
+)
+  .sort((a, b) => b.created.getTime() - a.created.getTime())
+  .map((entry) => entry.post);
 ---
 
 <BaseLayout title={`Posts tagged "${tag}"`} description={`Blog posts tagged ${tag}.`}>

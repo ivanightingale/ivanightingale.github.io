@@ -4,7 +4,6 @@ date: 2026-08-15
 description: Sample post.
 cover:
   src: ../../images/covers/sample-cover.png
-  alt: A sample blog cover
 tags:
   - welcome
   - astro
