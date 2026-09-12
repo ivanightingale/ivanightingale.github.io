@@ -775,6 +775,10 @@ a.tag:hover {
   color: var(--muted);
 }
 
+.post-date + .post-date {
+  margin-top: 4px;
+}
+
 .post-excerpt {
   max-width: var(--measure);
   margin: 0 0 12px;
