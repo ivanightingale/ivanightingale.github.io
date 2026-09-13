@@ -4,13 +4,16 @@ import { getCollection } from 'astro:content';
 import { slugify } from '../../../lib/slugify';
 
 const posts = await getCollection('blog');
-const counts = new Map<string, number>();
+const tagsBySlug = new Map<string, { tag: string; count: number }>();
 for (const post of posts) {
   for (const tag of post.data.tags) {
-    counts.set(tag, (counts.get(tag) ?? 0) + 1);
+    const slug = slugify(tag);
+    const entry = tagsBySlug.get(slug);
+    if (entry) entry.count += 1;
+    else tagsBySlug.set(slug, { tag, count: 1 });
   }
 }
-const tags = [...counts.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+const tags = [...tagsBySlug.entries()].sort((a, b) => a[1].tag.localeCompare(b[1].tag));
 ---
 
 <BaseLayout title="Blog tags" description="All blog post tags.">
@@ -24,9 +27,9 @@ const tags = [...counts.entries()].sort((a, b) => a[0].localeCompare(b[0]));
         <p class="empty">No tags yet.</p>
       ) : (
         <ul class="tag-index">
-          {tags.map(([tag, count]) => (
+          {tags.map(([slug, { tag, count }]) => (
             <li>
-              <a href={`/blog/tags/${slugify(tag)}/`}>
+              <a href={`/blog/tags/${slug}/`}>
                 <span>{tag}</span>
                 <span class="tag-index__count">{count}</span>
               </a>
