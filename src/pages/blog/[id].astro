@@ -33,7 +33,6 @@ const { created, updated, showUpdated } = await getPostDates(post);
       )}
     </div>
     <div class="spread__body">
-      <h1 class="article__title">{post.data.title}</h1>
       {post.data.cover && (
         <Image
           class="article__cover"
@@ -43,6 +42,7 @@ const { created, updated, showUpdated } = await getPostDates(post);
           sizes="800px"
         />
       )}
+      <h1 class="article__title">{post.data.title}</h1>
       <div class="article__body">
         <Content />
       </div>
