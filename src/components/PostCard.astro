@@ -2,41 +2,36 @@
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import TagPill from './TagPill.astro';
+import { getPostDates, formatPostDate } from '../lib/post-dates';
 
 interface Props {
   post: CollectionEntry<'blog'>;
-  /** The newest post leads the list with a full-width cover. */
-  lead?: boolean;
 }
 
-const { post, lead = false } = Astro.props;
+const { post } = Astro.props;
 const { data } = post;
 const href = `/blog/${post.id}/`;
-const formattedDate = new Intl.DateTimeFormat('en', {
-  year: 'numeric',
-  month: 'short',
-  day: 'numeric',
-  timeZone: 'UTC',
-}).format(data.date);
+const { created, updated, showUpdated } = await getPostDates(post);
+const formattedCreated = formatPostDate(created, 'short');
+const formattedUpdated = formatPostDate(updated, 'short');
 
-const block = lead ? 'post-lead' : 'post-item';
-// Without a cover there is nothing to fill the thumbnail column, so the row
-// collapses to a single column.
-const wrapperClass = !lead && !data.cover ? `${block} ${block}--textonly` : block;
-const coverWidths = lead ? [560, 1120] : [150, 300];
-const coverSizes = lead ? '800px' : '150px';
+const wrapperClass = data.cover ? 'post-item' : 'post-item post-item--textonly';
+
+const coverWidths = [200, 400];
+const coverSizes = '(max-width: 720px) 100vw, 200px';
 ---
 
 <article class={wrapperClass}>
-  {data.cover && (
-    /* Decorative in a list: the title link beneath already names the destination. */
-    <a class={`${block}__cover`} href={href} tabindex="-1" aria-hidden="true">
-      <Image src={data.cover.src} alt="" widths={coverWidths} sizes={coverSizes} />
-    </a>
-  )}
-  <div>
-    <time class="post-date" datetime={data.date.toISOString()}>{formattedDate}</time>
-    <h2 class={`${block}__title`}>
+  <div class="post-item__body">
+    <div class="post-meta">
+      <time class="post-date" datetime={created.toISOString()}>{formattedCreated}</time>
+      {showUpdated && (
+        <time class="post-date post-date--updated" datetime={updated.toISOString()}>
+          Updated {formattedUpdated}
+        </time>
+      )}
+    </div>
+    <h2 class="post-item__title">
       <a href={href}>{data.title}</a>
     </h2>
     <p class="post-excerpt">{data.description}</p>
@@ -48,4 +43,10 @@ const coverSizes = lead ? '800px' : '150px';
       </div>
     )}
   </div>
+  {data.cover && (
+    /* Decorative in a list: the title link already names the destination. */
+    <a class="post-item__cover" href={href} tabindex="-1" aria-hidden="true">
+      <Image src={data.cover.src} alt="" widths={coverWidths} sizes={coverSizes} />
+    </a>
+  )}
 </article>
