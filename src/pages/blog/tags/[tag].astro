@@ -7,16 +7,23 @@ import { getPostDates } from '../../../lib/post-dates';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
-  const tags = [...new Set(posts.flatMap((post) => post.data.tags))];
-  return tags.map((tag) => ({
-    params: { tag: slugify(tag) },
+  const tagsBySlug = new Map<string, string>();
+  for (const post of posts) {
+    for (const tag of post.data.tags) {
+      const slug = slugify(tag);
+      if (!tagsBySlug.has(slug)) tagsBySlug.set(slug, tag);
+    }
+  }
+  return [...tagsBySlug].map(([slug, tag]) => ({
+    params: { tag: slug },
     props: { tag },
   }));
 }
 
 const { tag } = Astro.props;
+const tagSlug = slugify(tag);
 const matching = (await getCollection('blog')).filter((post) =>
-  post.data.tags.some((t) => slugify(t) === tag)
+  post.data.tags.some((t) => slugify(t) === tagSlug)
 );
 const posts = (
   await Promise.all(
