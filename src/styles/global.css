@@ -224,12 +224,12 @@ main {
   color: var(--muted);
 }
 
-.spread__meta a {
+.spread__meta a:not(.tag) {
   color: var(--text-soft);
   text-decoration: none;
 }
 
-.spread__meta a:hover {
+.spread__meta a:not(.tag):hover {
   color: var(--accent);
   text-decoration: underline;
 }
@@ -632,6 +632,7 @@ section[id] {
 
 a.tag:hover {
   background: color-mix(in srgb, var(--accent) 18%, transparent);
+  text-decoration: underline;
 }
 
 .tag-row {
