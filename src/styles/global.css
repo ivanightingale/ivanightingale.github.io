@@ -290,7 +290,7 @@ section[id] {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: var(--radius);
+  border-radius: 0;
 }
 
 .intro__contact {
@@ -298,8 +298,6 @@ section[id] {
   flex-direction: column;
   gap: 12px;
   margin-top: 20px;
-  padding-top: 18px;
-  border-top: 1px solid var(--rule);
   font-family: var(--sans);
   font-size: 14px;
 }
