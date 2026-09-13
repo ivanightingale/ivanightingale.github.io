@@ -3,7 +3,7 @@ title: "Position: how exactly AI will make complex decisions for us"
 date: 2026-09-12
 description: "Optimization is the calculator for complex decisions, and AI will not render it irrelevant."
 cover:
-  src: ../../images/covers/ai-decisions.png
+  src: ../../images/covers/how-ai-will-make-complex-decisions.png
 tags:
   - position
   - LLM
