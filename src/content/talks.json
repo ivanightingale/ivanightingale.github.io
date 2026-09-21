@@ -6,7 +6,7 @@
     "location": "Atlanta, GA",
     "date": "October 2025",
     "links": [
-      { "label": "slides", "url": "/pdf/example-talk.pdf" }
+      { "label": "slides", "url": "public/pdf/Dual Conic Proxy for Semidefinite Relaxation of AC Optimal Power Flow - INFORMS.pdf" }
     ]
   },
   {
@@ -16,7 +16,17 @@
     "location": "Seattle, WA",
     "date": "October 2024",
     "links": [
-      { "label": "slides", "url": "/pdf/example-talk.pdf" }
+      { "label": "slides", "url": "public/pdf/Dual Conic Proxies for Optimal Power Flow - INFORMS.pdf" }
+    ]
+  },
+  {
+    "id": "pscc2024",
+    "title": "Dual Conic Proxies for AC Optimal Power Flow",
+    "event": "PSCC 2024",
+    "location": "Paris-Saclay, France",
+    "date": "June 2024",
+    "links": [
+      { "label": "slides", "url": "public/pdf/Dual Conic Proxies for Optimal Power Flow - PSCC.pdf" }
     ]
   }
 ]

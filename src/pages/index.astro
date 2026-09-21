@@ -13,15 +13,21 @@ const pubGroups = [
   { type: 'unpublished', label: 'Unpublished' },
 ] as const;
 
-const talks = await getCollection('talks');
+const talks = (
+  await getCollection('talks')
+).sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+);
 
-const awards = await getCollection('awards');
+const awards = (
+  await getCollection('awards')
+).sort((a, b) => b.data.year - a.data.year);
 ---
 
 <BaseLayout description="Guancheng Qiu's academic homepage: research and blog.">
   <header class="masthead">
     <h1 class="masthead__name">Guancheng "Ivan" Qiu</h1>
-    <p class="masthead__role">Ph.D. Candidate in Operations Research</p>
+    <p class="masthead__role">Ph.D. Student in Operations Research</p>
   </header>
 
   <div class="intro">
@@ -70,7 +76,9 @@ const awards = await getCollection('awards');
     </div>
     <div class="spread__body">
       {pubGroups.map((group) => {
-        const items = pubs.filter((p) => p.data.type === group.type);
+        const items = pubs
+          .filter((p) => p.data.type === group.type)
+          .sort((a, b) => b.data.year - a.data.year);
         if (items.length === 0) return null;
         return (
           <>
