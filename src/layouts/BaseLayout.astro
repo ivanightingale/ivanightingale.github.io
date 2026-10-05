@@ -16,6 +16,24 @@ const { title, description = 'Personal academic website.' } = Astro.props;
 const documentTitle = title
   ? `${title} | ${siteName}`
   : `${siteName}'s homepage`;
+
+const personStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Guancheng Qiu',
+  alternateName: 'Ivan Qiu',
+  url: 'https://ivanightingale.github.io/',
+  jobTitle: 'Ph.D. Student in Operations Research',
+  affiliation: {
+    '@type': 'CollegeOrUniversity',
+    name: 'Georgia Institute of Technology',
+  },
+  sameAs: [
+    'https://github.com/ivanightingale',
+    'https://www.linkedin.com/in/guancheng-q/',
+    'https://orcid.org/0000-0002-9934-5337',
+  ],
+};
 ---
 
 <!doctype html>
@@ -32,6 +50,7 @@ const documentTitle = title
     <meta property="og:description" content={description} />
     <meta property="og:url" content={Astro.url.href} />
     <link rel="canonical" href={Astro.url.href} />
+    <script type="application/ld+json" set:html={JSON.stringify(personStructuredData)} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
